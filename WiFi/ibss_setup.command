@@ -8,7 +8,7 @@
 #If FAIL, UNTESTED, or INCOMPLETE, collect WiFi logs from UTT, and setup IBSS for retest.
 
 
-log_store=``
+log_store=`/AppleInternal/Diagnostics/Logs/`
 
 #/var/logs/Astro/burnin.astro/log.txt
 
@@ -16,7 +16,7 @@ log_store=``
 collectlogs()
 
 {
-	cp -r /Phoenix/Logs/WiPAS/ $log_store
+	cp -r /Phoenix/Logs/WiPAS $log_store
 	if [ $? -n 0 ]; then
 		echo "Log Collection failed; please check what occurred."
 	fi
@@ -35,26 +35,23 @@ if [ $cb_check -ne 1 ]; then
 	echo "Running ibss.command..."
 	echo "##################"
 	echo ""
+	# Collect Logs anyways; could've failed.
 	collectlogs()
-
-
+	# Run IBSS.
  	/bin/sh /AppleInternal/Applications/WiPAS/WiPASminiOSX.app/Contents/Resources/ibss.command
 
-	if [ $? -ne 0 ]; then
-	
-		#Hides inactive dock items. '-bool false' undoes this change
-		defaults write com.apple.dock static-only -bool true; killall Dock
-	
-		else
-		echo ""
-		echo "##################"
-		echo "ibss.command executed properly."
-		echo "##################"
-		echo ""
-	fi
+	#Hides inactive dock items. '-bool false' undoes this change
+	#defaults write com.apple.dock static-only -bool true; killall Dock	
+
+	echo ""
+	echo "##################"
+	echo "ibss.command executed properly."
+	echo "##################"
+	echo ""
 
 	sleep 5
 	killall -c Terminal
+	
 else
 	#Collect UUT WiFi logs and download them to USB
 	collectlogs()
