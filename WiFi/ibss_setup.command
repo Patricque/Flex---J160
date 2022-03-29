@@ -52,6 +52,18 @@ else
 fi	
 }
 
+ibss_setup()
+
+{
+
+# Need to input the ibss in here since the original command creates a directory in which we don't want the logs to go to.
+# The hope is that without a new overlay/test I can thwart the logs and their location.
+
+
+}
+
+
+
 main()
 {
 #CB Check
