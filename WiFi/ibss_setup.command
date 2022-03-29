@@ -25,10 +25,12 @@ local_start()
 
 if [ $local_mode == TRUE ]; then
 
-	mkdir /Volumes/WIFI_USB_${usb_num}
+	mkdir /Volumes/WIFI_USB_${usb_num}/
 
-	if [ -s /Volumes/WIFI_USB_${usb_num} -ne 0 ]; then
-		echo "Local USB logs not created."
+	if [ -s /Volumes/WIFI_USB_${usb_num} ]; then
+		echo "Local USB logs created."
+	else
+		echo "Local US logs not created."
 	fi
 fi
 }
@@ -38,13 +40,13 @@ collectlogs()
 
 {
 if [ -s $usb_storage ]; then
-	cp -r /Phoenix/Logs/WiPAS $usb_storage
-	if [ $? -n 0 ]; then
+	cp -rv /Phoenix/Logs/WiPAS $usb_log_store
+	if [ $? != 0 ]; then
 		echo "Log Collection failed; please check what occurred."
 	fi
 else
-	cp -r /Phoenix/Logs/WiPAS $log_store
-	if [ $? -n 0 ]; then
+	cp -rv /Phoenix/Logs/WiPAS $log_store
+	if [ $? != 0 ]; then
 		echo "Log Collection failed; please check what occurred."
 	fi
 fi	
@@ -53,7 +55,7 @@ fi
 main()
 {
 #CB Check
-cb_check=`/usr/local/bin/eos-ssh controlbits read --offset 0xC1 | awk -F"|" '{print $2}' | grep -c "PASS"`
+#cb_check=`/usr/local/bin/eos-ssh controlbits read --offset 0xC1 | awk -F"|" '{print $2}' | grep -c "PASS"`
 
 if [ $cb_check -ne 1 ]; then
 	echo "This unit has no pass record."
@@ -95,4 +97,3 @@ fi
 
 local_start
 main
-
