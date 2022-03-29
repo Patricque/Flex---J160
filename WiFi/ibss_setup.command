@@ -25,7 +25,7 @@ local_start()
 
 if [ $local_mode == TRUE ]; then
 
-	mkdir /Volumes/WIFI_USB_${usb_num} &> /dev/null/
+	mkdir /Volumes/WIFI_USB_${usb_num}
 
 	if [ -s /Volumes/WIFI_USB_${usb_num} -ne 0 ]; then
 		echo "Local USB logs not created."
@@ -37,7 +37,7 @@ fi
 collectlogs()
 
 {
-if [ -s $usb_storage == 1 ]; then
+if [ -s $usb_storage ]; then
 	cp -r /Phoenix/Logs/WiPAS $usb_storage
 	if [ $? -n 0 ]; then
 		echo "Log Collection failed; please check what occurred."
