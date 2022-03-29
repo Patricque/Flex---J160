@@ -30,7 +30,7 @@ if [ $local_mode == TRUE ]; then
 	if [ -s /Volumes/WIFI_USB_${usb_num} ]; then
 		echo "Local USB logs created."
 	else
-		echo "Local US logs not created."
+		echo "Local USB logs not created."
 	fi
 fi
 }
@@ -39,13 +39,13 @@ fi
 collectlogs()
 
 {
-if [ -s $usb_storage ]; then
-	cp -rv /Phoenix/Logs/WiPAS $usb_log_store
+if [ -s $usb_log_store ]; then
+	cp -r /Phoenix/Logs/WiPAS $usb_log_store
 	if [ $? != 0 ]; then
 		echo "Log Collection failed; please check what occurred."
 	fi
 else
-	cp -rv /Phoenix/Logs/WiPAS $log_store
+	cp -r /Phoenix/Logs/WiPAS $log_store
 	if [ $? != 0 ]; then
 		echo "Log Collection failed; please check what occurred."
 	fi
@@ -55,7 +55,7 @@ fi
 main()
 {
 #CB Check
-#cb_check=`/usr/local/bin/eos-ssh controlbits read --offset 0xC1 | awk -F"|" '{print $2}' | grep -c "PASS"`
+cb_check=`/usr/local/bin/eos-ssh controlbits read --offset 0xC1 | awk -F"|" '{print $2}' | grep -c "PASS"`
 
 if [ $cb_check -ne 1 ]; then
 	echo "This unit has no pass record."
@@ -82,8 +82,18 @@ if [ $cb_check -ne 1 ]; then
 else
       #Collect UUT WiFi logs and download them to USB
 	collectlogs
-    echo "This unit has already PASSED WiFi. Please check the unit status!"
-	echo "If this has not PASSED in SFC, please inform your Supervisor."
+	
+	echo -e "\n\033[34m====================================\033[00m\033[37m"
+	echo -e "\033[42m  ██████╗  █████╗ ███████╗███████╗  \033[00m\033[37m"
+	echo -e "\033[42m  ██╔══██╗██╔══██╗██╔════╝██╔════╝  \033[00m\033[37m"
+	echo -e "\033[42m  ██████╔╝███████║███████╗███████╗  \033[00m\033[37m"
+	echo -e "\033[42m  ██╔═══╝ ██╔══██║╚════██║╚════██║  \033[00m\033[37m"
+	echo -e "\033[42m  ██║     ██║  ██║███████║███████║  \033[00m\033[37m"
+	echo -e "\033[42m  ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝  \033[00m\033[37m"
+	echo -e "\033[34m====================================\033[00m\033[37m"
+    	
+    	echo -e "\nThis unit has already PASSED WiFi. Please check the unit status!"
+	echo -e "If this has not PASSED in SFC, please inform your Supervisor.\n"
 	
 	echo -e "Resetting Astro, as well, for a clean start\n"
 	/usr/local/bin/eos-ssh astro reset
