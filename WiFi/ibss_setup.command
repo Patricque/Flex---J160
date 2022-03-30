@@ -85,8 +85,8 @@ if [ $cb_check -ne 1 ]; then
 	# Collect Logs anyways; could've failed.
 	collectlogs
 	# Run IBSS.
-	/AppleInternal/Applications/WiPAS/WiPASminiOSX.app/Contents/Resources/ibss.command
-
+	#/AppleInternal/Applications/WiPAS/WiPASminiOSX.app/Contents/Resources/ibss.command
+	ibss_setup
 	echo ""
 	echo "##################"
 	echo "ibss.command executed properly."
