@@ -13,7 +13,8 @@ usb_num=1
 #Need to ensure that use in IO1 doesn't break the system
 
 #UUT Store
-log_store="/AppleInternal/Diagnostics/Logs/"
+mkdir /AppleInternal/Diagnostics/Logs/WiPAS_Logs
+log_store="/AppleInternal/Diagnostics/Logs/WiPAS_Logs/"
 
 #Local Store
 #Enable for regression
@@ -85,17 +86,19 @@ if [ $cb_check -ne 1 ]; then
 	# Collect Logs anyways; could've failed.
 	collectlogs
 	# Run IBSS.
+	#/AppleInternal/Applications/WiPAS/WiPASminiOSX.app/Contents/Resources/ibss.command
 	ibss_setup
 	echo ""
 	echo "##################"
 	echo "ibss.command executed properly."
-	echo "You may test this unit."
 	echo "##################"
 	echo ""
 
+	sleep 5
+	killall -c Terminal
 	
 else
-    
+      #Collect UUT WiFi logs and download them to USB
 	collectlogs
 	
 	echo -e "\n\033[34m====================================\033[00m\033[37m"
@@ -109,10 +112,6 @@ else
     	
     	echo -e "\nThis unit has already PASSED WiFi. Please check the unit status!"
 	echo -e "If this has not PASSED in SFC, please inform your Supervisor.\n"
-	
-	echo -e "Resetting Astro, as well, for a clean start\n"
-	/usr/local/bin/eos-ssh astro reset
-
 	echo -e "The unit will now be powered off in 30s, please stand-by.\n"
 	sleep 30
 	shutdown -h now
