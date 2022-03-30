@@ -56,9 +56,14 @@ ibss_setup()
 
 {
 
-# Need to input the ibss in here since the original command creates a directory in which we don't want the logs to go to.
-# The hope is that without a new overlay/test I can thwart the logs and their location.
-
+sudo mount -rw /
+/usr/local/bin/smcif -w MSLD 2;
+killall WiPASminiOSX;
+mkdir -p /Applications/WiPAS;
+echo ota.tethering.method=ibss > /Applications/WiPAS/boot-args.txt;
+mkdir -p /Phoenix/Logs/WiPAS/;
+echo -e "\n>>>>>>>>>>>> Launch IBSS at: "`date`"\n" >> /Phoenix/Logs/WiPAS/WiPASminiTerminal.txt 2>&1 &
+/AppleInternal/Applications/WiPAS/WiPASminiOSX.app/Contents/MacOS/WiPASminiOSX -c standalone -l stdout >> /Phoenix/Logs/WiPAS/WiPASminiTerminal.txt 2>&1 &
 
 }
 
