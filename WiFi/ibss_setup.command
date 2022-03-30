@@ -92,11 +92,7 @@ if [ $cb_check -ne 1 ]; then
 	echo "##################"
 	echo "ibss.command executed properly."
 	echo "##################"
-	echo ""
-
-	sleep 5
-	killall -c Terminal
-	
+	echo ""	
 else
       #Collect UUT WiFi logs and download them to USB
 	collectlogs
