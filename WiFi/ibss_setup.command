@@ -85,7 +85,6 @@ if [ $cb_check -ne 1 ]; then
 	# Collect Logs anyways; could've failed.
 	collectlogs
 	# Run IBSS.
-	#/AppleInternal/Applications/WiPAS/WiPASminiOSX.app/Contents/Resources/ibss.command
 	ibss_setup
 	echo ""
 	echo "##################"
@@ -94,8 +93,9 @@ if [ $cb_check -ne 1 ]; then
 	echo "##################"
 	echo ""
 
+	
 else
-      #Collect UUT WiFi logs and download them to USB
+    
 	collectlogs
 	
 	echo -e "\n\033[34m====================================\033[00m\033[37m"
