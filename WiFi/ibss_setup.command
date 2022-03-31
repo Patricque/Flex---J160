@@ -37,6 +37,7 @@ fi
 }
 
 #LogCollection Function
+#Works: F5KHH03CK7GF - RUNIN 3/31/22 @ 7:19
 collectlogs()
 
 {
