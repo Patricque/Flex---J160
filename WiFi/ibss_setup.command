@@ -58,14 +58,7 @@ ibss_setup()
 
 {
 
-sudo mount -rw /
-/usr/local/bin/smcif -w MSLD 2;
-killall WiPASminiOSX;
-mkdir -p /Applications/WiPAS;
-echo ota.tethering.method=ibss > /Applications/WiPAS/boot-args.txt;
-mkdir -p /Phoenix/Logs/WiPAS/;
-echo -e "\n>>>>>>>>>>>> Launch IBSS at: "`date`"\n" >> /Phoenix/Logs/WiPAS/WiPASminiTerminal.txt 2>&1 &
-/AppleInternal/Applications/WiPAS/WiPASminiOSX.app/Contents/MacOS/WiPASminiOSX -c standalone -l stdout >> /Phoenix/Logs/WiPAS/WiPASminiTerminal.txt 2>&1 &
+/AppleInternal/Applications/WiPAS/WiPASminiOSX.app/Contents/Resources/ibss.command
 
 }
 
@@ -87,7 +80,6 @@ if [ $cb_check -ne 1 ]; then
 	# Collect Logs anyways; could've failed.
 	collectlogs
 	# Run IBSS.
-	#/AppleInternal/Applications/WiPAS/WiPASminiOSX.app/Contents/Resources/ibss.command
 	ibss_setup
 	echo ""
 	echo "##################"
@@ -110,7 +102,7 @@ else
     	echo -e "\nThis unit has already PASSED WiFi. Please check the unit status!"
 	echo -e "If this has not PASSED in SFC, please inform your Supervisor.\n"
 	echo -e "The unit will now be powered off in 30s, please stand-by.\n"
-	sleep 30
+	sleep 10
 	shutdown -h now
 		
 fi
